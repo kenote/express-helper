@@ -17,7 +17,7 @@ import { ExpressServer, ExpressSession, ServerSettings } from '@kenote/express-h
 import * as connectRedis from 'connect-redis'
 import * as passport from 'passport'
 
-const session_secret = 'kenote_secret'
+const session_secret: string = 'kenote_secret'
 const RedisStore: connectRedis.RedisStore = connectRedis(ExpressSession)
 
 @ServerSettings({

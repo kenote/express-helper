@@ -41,7 +41,7 @@ export class ExpressServer {
   }
 }
 
-export function ServerSettings (value: serverSettings) {
+export function ServerSettings (value: serverSettings): any {
   return function (target: any): void {
     target.prototype.settings = <serverSettings> value
   }

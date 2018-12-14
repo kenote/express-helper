@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@types/body-parser@*", "@types/body-parser@^1.17.0":
+"@types/body-parser@*":
   version "1.17.0"
   resolved "http://registry.npm.taobao.org/@types/body-parser/download/@types/body-parser-1.17.0.tgz#9f5c9d9bd04bb54be32d5eb9fc0d8c974e6cf58c"
   integrity sha1-n1ydm9BLtUvjLV65/A2Ml05s9Yw=
@@ -314,6 +314,11 @@ iconv-lite@0.4.23:
   integrity sha1-KXhx9jvlB63Pv8pxXQzQ7thOmmM=
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+immutable@^4.0.0-rc.12:
+  version "4.0.0-rc.12"
+  resolved "http://registry.npm.taobao.org/immutable/download/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
+  integrity sha1-ylmn5MGa6Nm/dKl73w9uLypdAhc=
 
 inherits@2.0.3:
   version "2.0.3"

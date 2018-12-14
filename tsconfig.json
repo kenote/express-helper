@@ -18,6 +18,7 @@
     "strictNullChecks": true,
     "removeComments": true,
     "suppressImplicitAnyIndexErrors": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
   }
 }
