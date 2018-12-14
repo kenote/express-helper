@@ -7,13 +7,13 @@ export declare class ExpressServer extends expressServer {}
 
 export declare const ExpressSession: typeof session
 
-export declare const ServerSettings: (value: serverSettings) => void
+export declare const ServerSettings: (value: serverSettings) => any
 
 export declare class RouterMethods extends routerMethods {}
 
 export declare class RouterController extends routerController {}
 
-export declare const ControllerMount: (...controller: Array<RouterMethods | any>) => void
+export declare const ControllerMount: (...controller: Array<RouterMethods | any>) => any
 
 export declare const Router: (...config: RouterMethodSetting[]) => any
 
