@@ -48,3 +48,72 @@ class Server extends ExpressServer {
 
 new Server(express).start()
 ```
+
+### Create An Express Controller
+
+```ts
+// api/sign.ts
+import { Request, Response, NextFunction } from 'express'
+import { Router, RouterMethods, Filter } from '@kenote/express-helper'
+
+export default class Sign extends RouterMethods {
+
+  @Router(
+    { method: 'get', path: '/accesstoken' },
+    { method: 'get', path: '/accesstoken/:id' }
+  )
+  @Filter(
+    (req: Request, res: Response, next: NextFunction): void => {
+      return next(req.params)
+    },
+    (data: any, req: Request, res: Response, next: NextFunction): void => {
+      return next({...data, name: 'accessToken'})
+    },
+  )
+  public async accessToken (data: any, req: Request, res: IResponse, next: NextFunction): Promise<Response> {
+    
+    return await res.json(data)
+  }
+
+  @Router(
+    { method: 'post', path: '/login' }
+  )
+  public async login (req: Request, res: Response, next: NextFunction): Promise<Response> {
+    
+    return await res.json(data)
+  }
+}
+```
+
+```ts
+// api/index.ts
+import { RouterController, ControllerMount } from '@kenote/express-helper'
+import Sign from './sign'
+
+@ControllerMount(
+  Sign
+)
+class Controller extends RouterController {}
+
+export default new Controller()
+```
+
+```ts
+// app.ts
+...
+import api from './api'
+
+@ServerSettings({
+  ...
+})
+class Server extends ExpressServer {
+
+  constructor (Express) {
+    super(Express)
+    ...
+    this.appliction.use('/api', api.handler())
+  }
+
+}
+...
+```
