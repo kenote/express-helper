@@ -17,4 +17,4 @@ export declare const ControllerMount: (...controller: Array<RouterMethods | any>
 
 export declare const Router: (...config: RouterMethodSetting[]) => any
 
-export declare const Filter: (...filter: express.RequestHandler[]) => any
+export declare const Filter: (...filter: Array<any>) => any

@@ -8,6 +8,10 @@ export interface RouterMethodSetting {
   path: PathParams;
 }
 
+interface IRequestHandler {
+  (data: any, req: express.Request, res: express.Response, next: express.NextFunction): any;
+}
+
 export class RouterMethods {
   public __DecoratedRouters: Map<RouterMethodSetting, express.RequestHandler[]>;
   public __DecoratedFilters: Map<string, any>;
@@ -18,9 +22,9 @@ export function Router (...config: RouterMethodSetting[]): any {
     if (!target.__DecoratedRouters) {
       target.__DecoratedRouters = Map()
     }
-    let requestHandler: express.RequestHandler[] = [target[propertyKey]]
+    let requestHandler: Array<any> = [target[propertyKey]]
     if (target.__DecoratedFilters && target.__DecoratedFilters.get(propertyKey)) {
-      let filter: express.RequestHandler[] = target.__DecoratedFilters.get(propertyKey)
+      let filter: Array<any> = target.__DecoratedFilters.get(propertyKey)
       requestHandler = filter.concat(requestHandler)
     }
     if (Array.isArray(config)) {
@@ -37,7 +41,7 @@ export function Router (...config: RouterMethodSetting[]): any {
   }
 }
 
-export function Filter (...filter: express.RequestHandler[]): any {
+export function Filter (...filter: Array<express.RequestHandler | IRequestHandler>): any {
   return (target: RouterMethods, propertyKey: string, descriptor: PropertyDescriptor): void => {
     if (!target.__DecoratedFilters) {
       target.__DecoratedFilters = Map()
