@@ -13,3 +13,7 @@ exports.ControllerMount = router_1.ControllerMount;
 var error_1 = require("./error");
 exports.ExpressError = error_1.ExpressError;
 exports.ErrorSetting = error_1.ErrorSetting;
+var middleware_1 = require("./middleware");
+exports.Middleware = middleware_1.Middleware;
+exports.MiddlewareSetting = middleware_1.MiddlewareSetting;
+exports.RegisterMiddlewareMethod = middleware_1.RegisterMiddlewareMethod;

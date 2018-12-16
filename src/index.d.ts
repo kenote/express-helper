@@ -9,6 +9,11 @@ import {
   Filter as filter
 } from './router'
 import { ExpressError as expressError, ErrorSetting as errorSetting } from './error'
+import { 
+  Middleware as middleware, 
+  MiddlewareSetting as middlewareSetting, 
+  RegisterMiddlewareMethod as registerMiddlewareMethod 
+} from './middleware'
 
 export declare class ExpressServer extends expressServer {}
 
@@ -38,3 +43,9 @@ export declare interface errorInfo {
   code: number;
   message?: string;
 }
+
+export declare class Middleware extends middleware {}
+
+export declare const MiddlewareSetting: typeof middlewareSetting
+
+export declare const RegisterMiddlewareMethod: typeof registerMiddlewareMethod
