@@ -10,3 +10,6 @@ exports.Router = router_1.Router;
 exports.Filter = router_1.Filter;
 exports.RouterController = router_1.RouterController;
 exports.ControllerMount = router_1.ControllerMount;
+var error_1 = require("./error");
+exports.ExpressError = error_1.ExpressError;
+exports.ErrorSetting = error_1.ErrorSetting;
