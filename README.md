@@ -214,4 +214,4 @@ class Server extends ExpressServer {
 
 ## License
 
-this repo is released under the [MIT License](https://github.com/kenote/mongoose-helper/blob/master/LICENSE).
+this repo is released under the [MIT License](https://github.com/kenote/express-helper/blob/master/LICENSE).
