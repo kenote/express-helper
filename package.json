@@ -1,5 +1,5 @@
 {
-  "name": "@kenote/express-helper",
+  "name": "kenote-express-helper",
   "version": "1.0.0",
   "description": "Express's Helper.",
   "main": "./dist/index.js",
@@ -29,5 +29,14 @@
   },
   "peerDependencies": {
     "express": "^4"
-  }
+  },
+  "engines": {
+    "node": ">8.0.0"
+  },
+  "keywords": [
+    "express",
+    "helper",
+    "assistant",
+    "typescript"
+  ]
 }
