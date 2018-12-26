@@ -20,7 +20,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = require("util");
+var util = require("util");
 var ExpressError = (function () {
     function ExpressError() {
         var _this = this;
@@ -34,7 +34,7 @@ var ExpressError = (function () {
             }
             if (Array.isArray(opts)) {
                 opts.splice(0, 0, info.message);
-                info.message = util_1.default.format.apply(util_1.default, __spread([opts[0]], opts.slice(1)));
+                info.message = util.format.apply(util, __spread([opts[0]], opts.slice(1)));
             }
             if (json)
                 return info;
