@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function MiddlewareSetting(setting) {
     return function (target) {
         target.prototype.__ResponseHeaders = setting.header || [];
+        target.prototype.__RequestParameters = setting.parameter;
     };
 }
 exports.MiddlewareSetting = MiddlewareSetting;
@@ -51,6 +52,11 @@ var Middleware = (function () {
                     if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                 }
                 finally { if (e_1) throw e_1.error; }
+            }
+            if (_this.__RequestParameters) {
+                for (var parameter in _this.__RequestParameters) {
+                    request[parameter] = _this.__RequestParameters[parameter];
+                }
             }
             try {
                 for (var _f = __values(_this.__ResponseMethods), _g = _f.next(); !_g.done; _g = _f.next()) {
