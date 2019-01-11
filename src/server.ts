@@ -3,17 +3,11 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as methodOverride from 'method-override'
 import * as compress from 'compression'
-import * as cookieParser from 'cookie-parser'
-import * as session from 'express-session'
 
 export interface serverSettings {
   Host?: string;
   Port?: number;
-  secret?: string | string[];
-  session?: session.SessionOptions;
 }
-
-export const ExpressSession: typeof session = session
 
 export class ExpressServer {
 
@@ -26,9 +20,6 @@ export class ExpressServer {
     this.appliction.use((<any>bodyParser).urlencoded({ extended: true, limit: '1mb' }))
     this.appliction.use(methodOverride())
     this.appliction.use(compress())
-
-    this.appliction.use(cookieParser(this.settings.secret))
-    this.appliction.use(session(this.settings.session))
   }
 
   public start (): void {

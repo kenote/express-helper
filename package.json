@@ -1,6 +1,6 @@
 {
   "name": "kenote-express-helper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Express's Helper.",
   "main": "./dist/index.js",
   "typings": "./src/index.d.ts",
@@ -13,16 +13,12 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
-    "cookie-parser": "^1.4.3",
-    "express-session": "^1.15.6",
     "immutable": "^4.0.0-rc.12",
     "method-override": "^3.0.0"
   },
   "devDependencies": {
     "@types/compression": "^0.0.36",
-    "@types/cookie-parser": "^1.4.1",
     "@types/express": "^4.16.0",
-    "@types/express-session": "^1.15.11",
     "@types/method-override": "^0.0.31",
     "express": "^4.16.4",
     "typescript": "^3.2.2"

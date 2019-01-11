@@ -5,9 +5,6 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var compress = require("compression");
-var cookieParser = require("cookie-parser");
-var session = require("express-session");
-exports.ExpressSession = session;
 var ExpressServer = (function () {
     function ExpressServer(Express) {
         if (Express === void 0) { Express = express; }
@@ -16,8 +13,6 @@ var ExpressServer = (function () {
         this.appliction.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
         this.appliction.use(methodOverride());
         this.appliction.use(compress());
-        this.appliction.use(cookieParser(this.settings.secret));
-        this.appliction.use(session(this.settings.session));
     }
     ExpressServer.prototype.start = function () {
         var server = http.createServer(this.appliction);
