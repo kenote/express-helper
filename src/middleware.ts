@@ -15,8 +15,8 @@ export function MiddlewareSetting (setting: middlewareSetting) {
 }
 
 export class Middleware {
-  public __ResponseMethods: Array<{ name: string, func: Function }>;
-  private __ResponseHeaders: Array<string[]>;
+  public __ResponseMethods: Array<{ name: string, func: Function }>
+  private __ResponseHeaders: Array<string[]>
   private __RequestParameters: {
     [propsName: string]: any
   };

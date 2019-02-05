@@ -9,49 +9,6 @@ $ yarn add kenote-express-helper
 
 ## Usages
 
-### Create An Express Server
-
-```ts
-import * as express from 'express'
-import { ExpressServer, ExpressSession, ServerSettings } from 'kenote-express-helper'
-import * as cookieParser from 'cookie-parser'
-import * as session from 'express-session'
-import * as connectRedis from 'connect-redis'
-import * as passport from 'passport'
-
-const session_secret: string = 'kenote_secret'
-const RedisStore: connectRedis.RedisStore = connectRedis(ExpressSession)
-
-@ServerSettings({
-  Host: '0.0.0.0',
-  Port: 4000,
-})
-class Server extends ExpressServer {
-
-  constructor (Express) {
-    super(Express)
-
-    this.appliction.use(cookieParser(session_secret))
-    this.appliction.use(session({
-      secret: <string> session_secret,
-      store: new RedisStore({
-        host: '127.0.0.1',
-        port: 6379,
-        db: 0
-      }),
-      resave: true,
-      saveUninitialized: true
-    }))
-    
-    this.appliction.use(passport.initialize())
-    this.appliction.use(passport.session())
-  }
-
-}
-
-new Server(express).start()
-```
-
 ### Create An Express Controller
 
 `api/sign.ts`
@@ -103,32 +60,12 @@ class Controller extends RouterController {}
 export default new Controller()
 ```
 
-`app.ts`
-```ts
-...
-import api from './api'
-
-@ServerSettings({
-  ...
-})
-class Server extends ExpressServer {
-
-  constructor (Express) {
-    super(Express)
-    ...
-    this.appliction.use('/api', api.handler())
-  }
-
-}
-...
-```
-
 ### Create An Express Error
 
 `error/index.ts`
 
 ```ts
-import { ExpressError as expressError, ErrorSetting } from 'kenote-express-helper'
+import { ExpressError, ErrorSetting } from 'kenote-express-helper'
 
 const Code: object = {
   ERROR_STATUS_NULL: 0
@@ -142,7 +79,7 @@ const Message: object = {
   code: Code,
   message: Message
 })
-class ExpressError extends expressError {
+class MyError extends ExpressError {
   
 }
 
@@ -193,26 +130,6 @@ class Restful extends Middleware {
 }
 
 export default new Restful()
-```
-
-`app.ts`
-
-```ts
-import restful from './middlewares/restful'
-
-@ServerSettings({
-  ...
-})
-class Server extends ExpressServer {
-
-  constructor (Express) {
-    super(Express)
-    ...
-    this.appliction.use(restful.hendler())
-  }
-
-}
-...
 ```
 
 ## License

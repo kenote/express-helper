@@ -1,51 +1,27 @@
-import * as express from 'express'
-import * as session from 'express-session'
-import { ServerSettings as serverSettings, ExpressServer as expressServer } from './server'
-import { 
-  RouterMethods as routerMethods, 
-  RouterController as routerController, 
-  ControllerMount as controllerMount,
-  Router as router,
-  Filter as filter
-} from './router'
-import { ExpressError as expressError, ErrorSetting as errorSetting } from './error'
-import { 
-  Middleware as middleware, 
-  MiddlewareSetting as middlewareSetting, 
-  RegisterMiddlewareMethod as registerMiddlewareMethod 
-} from './middleware'
+import { RouterMethods as __RouterMethods, RouterController as __RouterController, ControllerMount as __ControllerMount, Router as __Router,Filter as __Filter } from './router'
+import { ExpressError as __ExpressError, ErrorSetting as __ErrorSetting, IError as __IError, errorInfo as __errorInfo } from './error'
+import { Middleware as __Middleware, MiddlewareSetting as __MiddlewareSetting, RegisterMiddlewareMethod as __RegisterMiddlewareMethod } from './middleware'
 
-export declare class ExpressServer extends expressServer {}
+export declare class RouterMethods extends __RouterMethods {}
 
-export declare const ExpressSession: typeof session
+export declare class RouterController extends __RouterController {}
 
-export declare const ServerSettings: typeof serverSettings
+export declare const ControllerMount: typeof __ControllerMount
 
-export declare class RouterMethods extends routerMethods {}
+export declare const Router: typeof __Router
 
-export declare class RouterController extends routerController {}
+export declare const Filter: typeof __Filter
 
-export declare const ControllerMount: typeof controllerMount
+export declare class ExpressError extends __ExpressError {}
 
-export declare const Router: typeof router
+export declare const ErrorSetting: typeof __ErrorSetting
 
-export declare const Filter: typeof filter
+export declare interface IError extends __IError {}
 
-export declare class ExpressError extends expressError {}
+export declare interface errorInfo extends __errorInfo {}
 
-export declare const ErrorSetting: typeof errorSetting
+export declare class Middleware extends __Middleware {}
 
-export declare interface IError extends Error {
-  code?: number
-}
+export declare const MiddlewareSetting: typeof __MiddlewareSetting
 
-export declare interface errorInfo {
-  code: number;
-  message?: string;
-}
-
-export declare class Middleware extends middleware {}
-
-export declare const MiddlewareSetting: typeof middlewareSetting
-
-export declare const RegisterMiddlewareMethod: typeof registerMiddlewareMethod
+export declare const RegisterMiddlewareMethod: typeof __RegisterMiddlewareMethod

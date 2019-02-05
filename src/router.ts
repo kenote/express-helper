@@ -3,18 +3,18 @@ import { PathParams } from 'express-serve-static-core'
 import { Map } from 'immutable'
 
 export interface RouterMethodSetting {
-  name?: string;
-  method: 'get' | 'post' | 'put' | 'head' | 'delete' | 'use';
-  path: PathParams;
+  name?: string
+  method: 'get' | 'post' | 'put' | 'head' | 'delete' | 'use'
+  path: PathParams
 }
 
 interface IRequestHandler {
-  (data: any, req: express.Request, res: express.Response, next: express.NextFunction): any;
+  (data: any, req: express.Request, res: express.Response, next: express.NextFunction): any
 }
 
 export class RouterMethods {
-  public __DecoratedRouters: Map<RouterMethodSetting, express.RequestHandler[]>;
-  public __DecoratedFilters: Map<string, any>;
+  public __DecoratedRouters: Map<RouterMethodSetting, express.RequestHandler[]>
+  public __DecoratedFilters: Map<string, any>
 }
 
 export function Router (...config: RouterMethodSetting[]): any {

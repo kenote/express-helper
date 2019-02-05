@@ -1,8 +1,8 @@
 import * as util from 'util'
 
 export interface errorInfo {
-  code: number;
-  message?: string;
+  code: number
+  message?: string
 }
 
 export interface IError extends Error {
@@ -10,13 +10,13 @@ export interface IError extends Error {
 }
 
 interface errorSetting {
-  code: object;
-  message: object;
+  code: object
+  message: object
 }
 
 export class ExpressError {
-  public __ErrorCode: object;
-  public __ErrorMessage: object;
+  public __ErrorCode: object
+  public __ErrorMessage: object
 
   public ErrorInfo = (code: number, opts?: any, json?: boolean) => {
     let info: errorInfo = { code }
