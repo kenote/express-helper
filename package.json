@@ -1,9 +1,9 @@
 {
   "name": "kenote-express-helper",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Express's Helper.",
-  "main": "./dist/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "types/index.d.ts",
   "repository": "https://github.com/kenote/express-helper.git",
   "author": "thondery <thondery@163.com>",
   "license": "MIT",
@@ -14,9 +14,7 @@
     "immutable": "^4.0.0-rc.12"
   },
   "devDependencies": {
-    "@types/express": "^4.16.0",
-    "express": "^4.16.4",
-    "typescript": "^3.2.2"
+    "typescript": "^3.5.2"
   },
   "peerDependencies": {
     "express": "^4"
