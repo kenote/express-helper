@@ -85,7 +85,7 @@
       true,
       "check-space"
     ],
-    "array-type": [true, "array"],
+    "array-type": [false, "array"],
     "no-angle-bracket-type-assertion": false
   },
   "rulesDirectory": [
