@@ -12,7 +12,7 @@ import { Controller, RouterMethod } from '../types'
  * @param handlers RequestHandler
  */
 export async function mountPipeline (name: string, pipeline: string, app: Application, ...handlers: RequestHandler[]): Promise<void> {
-  let pipelinePath: string = path.resolve(__dirname, pipeline)
+  let pipelinePath: string = path.resolve(process.cwd(), pipeline)
   if (!fs.existsSync(pipelinePath)) return
   let files: string[] = fs.readdirSync(pipelinePath).filter( filename => /\.(ts|es|es6|js)$/.test(filename) )
   try {
