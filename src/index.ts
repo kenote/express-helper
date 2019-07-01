@@ -1,4 +1,5 @@
 export { Controller, Path } from './controller'
 export { Router } from './router'
 export { Filter } from './filter'
-export { mountPipeline } from './pipeline'
+export { mountPipeline, mountPipelineHandle } from './pipeline'
+export { Middleware, MiddlewareSetting, RegisterMiddlewareMethod } from './middleware'

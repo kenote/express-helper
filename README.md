@@ -11,125 +11,65 @@ $ yarn add kenote-express-helper
 
 ### Create An Express Controller
 
-`api/sign.ts`
+`controller/account.ts`
 
 ```ts
 import { Request, Response, NextFunction } from 'express'
-import { Router, RouterMethods, Filter } from 'kenote-express-helper'
+import { Controller, Path, Router, Filter } from 'kenote-express-helper'
+import accountFilter from '../filters/account'
+import { IResponse } from '../middleware/restful'
 
-export default class Sign extends RouterMethods {
+@Path('/account')
+export default class Account extends Controller {
 
-  @Router(
-    { method: 'get', path: '/accesstoken' },
-    { method: 'get', path: '/accesstoken/:id' }
-  )
-  @Filter(
-    (req: Request, res: Response, next: NextFunction): void => {
-      return next(req.params)
-    },
-    (data: any, req: Request, res: Response, next: NextFunction): void => {
-      return next({...data, name: 'accessToken'})
-    },
-  )
-  public async accessToken (data: any, req: Request, res: IResponse, next: NextFunction): Promise<Response> {
-    
-    return await res.json(data)
+  @Router({ method: 'get', path: '/home' })
+  public home (req: Request, res: Response, next: NextFunction): Response {
+    return res.json({ test: 'ok' })
   }
 
-  @Router(
-    { method: 'post', path: '/login' }
-  )
-  public async login (req: Request, res: Response, next: NextFunction): Promise<Response> {
-    
-    return await res.json(data)
+  @Router({ method: 'post', path: '/login' })
+  @Filter(accountFilter.login)
+  public login (document: any, req: Request, res: IResponse, next: NextFunction): Response {
+    return res.api(document)
+  }
+
+  @Router({ method: 'get', path: '/help' })
+  public help (req: Request, res: IResponse, next: NextFunction): void {
+    return res.notfound()
   }
 }
 ```
 
-`api/index.ts`
+`filters/account.ts`
 
 ```ts
-import { RouterController, ControllerMount } from 'kenote-express-helper'
-import Sign from './sign'
+import { Request, Response, NextFunction } from 'express'
 
-@ControllerMount(
-  Sign
-)
-class Controller extends RouterController {}
+class Account {
 
-export default new Controller()
-```
-
-### Create An Express Error
-
-`error/index.ts`
-
-```ts
-import { ExpressError, ErrorSetting } from 'kenote-express-helper'
-
-const Code: object = {
-  ERROR_STATUS_NULL: 0
+  public login (req: Request, res: Response, next: NextFunction): Response | void {
+    return next({ test: 'ok' })
+  }
 }
 
-const Message: object = {
-  ERROR_STATUS_NULL: 'Request Success!'
-}
-
-@ErrorSetting({
-  code: Code,
-  message: Message
-})
-class MyError extends ExpressError {
-  
-}
-
-export default new ExpressError()
+export default new Account()
 ```
 
 `app.ts`
 
 ```ts
-import MyError from '../error'
+import * as http from 'http'
+import * as express from 'express'
+import { Application } from 'express'
+import { mountPipeline, mountPipelineHandle } from 'kenote-express-helper'
+import restful from './middleware/restful'
 
-MyError.ErrorInfo(0)
-/*
-{
-  code: 0,
-  message: 'Request Success!'
-}
-*/
-MyError.__ErrorCode.ERROR_STATUS_NULL
-// 0
-```
+(async () => {
+  const app: Application = express()
 
-### Create An Express Middleware
+  app.use(... await mountPipelineHandle())
 
-`middleware/restful.ts`
-
-```ts
-import { Response } from 'express'
-import { IError, errorInfo, Middleware, MiddlewareSetting, RegisterMiddlewareMethod } from 'kenote-express-helper'
-
-@MiddlewareSetting({
-  header: [
-    ['Access-Control-Allow-Origin', '*'],
-    ['Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'],
-    ['Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization']
-  ]
-})
-class Restful extends Middleware {
-
-  @RegisterMiddlewareMethod()
-  public api (response: Response) {
-    return (data: any): Response => {
-      ...
-      return response.json(data)
-    }
-  }
-
-}
-
-export default new Restful()
+})()
 ```
 
 ## License
