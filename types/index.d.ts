@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 import { KenoteServerRouterMethod } from './router'
 import { KenoteServerMiddlewareOptions } from './middleware'
-import { Controller, Path, Router, Filter, mountPipeline, mountPipelineHandle, Middleware, MiddlewareSetting, RegisterMiddlewareMethod } from '../src'
+import { KenoteServerPipelineOptions } from './pipeline'
+import { Controller, Path, Router, Filter, mountPipeline, Middleware, MiddlewareSetting, RegisterMiddlewareMethod } from '../src'
 
 export {
   Controller,
@@ -9,13 +10,13 @@ export {
   Router,
   Filter,
   mountPipeline,
-  mountPipelineHandle,
   Middleware,
   MiddlewareSetting,
   RegisterMiddlewareMethod,
   IRequestHandler,
   KenoteServerRouterMethod as RouterMethod,
-  KenoteServerMiddlewareOptions as MiddlewareOptions
+  KenoteServerMiddlewareOptions as MiddlewareOptions,
+  KenoteServerPipelineOptions as PipelineOptions
 }
 
 /**

@@ -1,69 +1,42 @@
 import * as path from 'path'
-import * as fs from 'fs'
+import * as glob from 'glob'
 import { Router, RequestHandler, Application } from 'express'
 import { Map } from 'immutable'
-import { Controller, RouterMethod } from '../types'
-
-/**
- * 挂载控制器管道
- * @param name 管道名称
- * @param pipeline 管道路径
- * @param handlers RequestHandler
- */
-export async function mountPipelineHandle (name: string, pipeline: string, ...handlers: RequestHandler[]): Promise<any> {
-  let pipelinePath: string = path.resolve(process.cwd(), pipeline)
-  if (!fs.existsSync(pipelinePath)) return
-  let files: string[] = fs.readdirSync(pipelinePath).filter( filename => /\.(ts|es|es6|js)$/.test(filename) )
-  try {
-    let modules: any[] = await Promise.all(files.map( file => (import(path.resolve(pipelinePath, file))) ))
-    let router: Router = Router()
-    for (let item of modules) {
-      let Control: Controller = new item.default()
-      addendRouter(Control.__DecoratedRouters, router, item.default.__DecoratedRoot)
-    }
-    if (handlers && handlers.length > 0) {
-      // app.use(name, ...handlers, router)
-      return [name, ...handlers, router]
-    }
-    else {
-      // app.use(name, router)
-      return [name, router]
-    }
-  } catch (error) {
-    throw error
-  }
-}
+import { Controller, RouterMethod, PipelineOptions } from '../types'
 
 /**
  * 挂载控制器管道
  * @param name 管道名称
  * @param pipeline 管道路径
  * @param app Application
- * @param handlers RequestHandler
+ * @param options IMPOptions
  */
-export async function mountPipeline (name: string, pipeline: string, app: Application, ...handlers: RequestHandler[]): Promise<any> {
-  let pipelinePath: string = path.resolve(process.cwd(), pipeline)
-  if (!fs.existsSync(pipelinePath)) return
-  let files: string[] = fs.readdirSync(pipelinePath).filter( filename => /\.(ts|es|es6|js)$/.test(filename) )
-  try {
-    let modules: any[] = await Promise.all(files.map( file => (import(path.resolve(pipelinePath, file))) ))
-    let router: Router = Router()
-    for (let item of modules) {
-      let Control: Controller = new item.default()
-      addendRouter(Control.__DecoratedRouters, router, item.default.__DecoratedRoot)
+export function mountPipeline (name: string, pipeline: string, app: Application, options: PipelineOptions): void {
+  let { root, handlers } = options || { root: '.', handlers: [] }
+  let router: Router = Router()
+  glob.sync(`/${pipeline}/**/*.ts`, { root }).forEach(async file => {
+    let filename: string = path.basename(file).replace(/\.ts$/, '')
+    if (/^(index)/.test(filename)) return
+    filename = path.basename(file).replace(/([a-zA-Z0-9\-\_]{1,})\.ts$/, `./${pipeline}/$1`)
+    try {
+      let controller = await import(file.replace(/\.[^.]*$/, ''))
+      let Control: Controller = new controller.default()
+      addendRouter(Control.__DecoratedRouters, router, controller.default.__DecoratedRoot)
+      handlers = [ ...handlers || [], router ]
+      app.use(name, ...handlers)
+    } catch (error) {
+      console.error(error)
     }
-    if (handlers && handlers.length > 0) {
-      app.use(name, ...handlers, router)
-    }
-    else {
-      app.use(name, router)
-    }
-  } catch (error) {
-    throw error
-  }
+  })
 }
 
-function addendRouter (maps: Map<RouterMethod, RequestHandler[]>, router: Router, root: string): void {
+/**
+ * 添加路由
+ * @param maps Map<RouterMethod, RequestHandler[]>
+ * @param router Router
+ * @param root string
+ */
+export function addendRouter (maps: Map<RouterMethod, RequestHandler[]>, router: Router, root: string): void {
   let _root: string = root || ''
   for (let [config, controller] of maps) {
     router[config.method](_root + config.path, ...controller)

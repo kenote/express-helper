@@ -9,8 +9,6 @@ $ yarn add kenote-express-helper
 
 ## Usages
 
-### Create An Express Controller
-
 `controller/account.ts`
 
 ```ts
@@ -40,6 +38,15 @@ export default class Account extends Controller {
 }
 ```
 
+`controller/index.ts`
+
+```ts
+import { MountController } from 'kenote-express-helper'
+import Account from './account'
+
+export default MountController( Account )
+```
+
 `filters/account.ts`
 
 ```ts
@@ -61,15 +68,20 @@ export default new Account()
 import * as http from 'http'
 import * as express from 'express'
 import { Application } from 'express'
-import { mountPipeline, mountPipelineHandle } from 'kenote-express-helper'
+import { mountPipeline } from 'kenote-express-helper'
 import restful from './middleware/restful'
+import controller from './controller'
 
-(async () => {
-  const app: Application = express()
+const app: Application = express()
+app.use(restful)
 
-  app.use(... await mountPipelineHandle())
+// Auto Routing
+mountPipeline('/api', 'controller', app, { root: 'src' })
 
-})()
+// Manual Routing
+// app.use('/api', controller)
+
+http.createServer(app).listen(3000)
 ```
 
 ## License

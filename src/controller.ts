@@ -1,6 +1,7 @@
-import { RequestHandler } from 'express'
+import { RequestHandler, Router } from 'express'
 import { Map } from 'immutable'
 import { RouterMethod } from '../types'
+import { addendRouter } from './pipeline'
 
 /**
  * 控制器基础类
@@ -34,5 +35,17 @@ export function Path (root: string): any {
   }
 }
 
+/**
+ * 挂载控制器
+ * @param controllers 
+ */
+export function MountController (...controllers: Array<Controller | any>): Router {
+  let router: Router = Router()
+  for (let item of controllers) {
+    let __DecoratedRouters: Map<RouterMethod, RequestHandler[]> = (<Controller> new item()).__DecoratedRouters
+    addendRouter(__DecoratedRouters, router, item.__DecoratedRoot)
+  }
+  return router
+}
 
 
