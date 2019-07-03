@@ -21,24 +21,24 @@ export class Middleware {
   /**
    * 中间件方法
    */
-  public __ResponseMethods: Map<string, (response: Response) => any>
+  public __ResponseMethods?: Map<string, (response: Response) => any>
 
   /**
    * 头部信息
    */
-  private __ResponseHeaders: string[][]
+  private __ResponseHeaders?: string[][]
 
   /**
    * Request 参数
    */
-  private __RequestParameters: Record<string, any>
+  private __RequestParameters?: Record<string, any>
 
   /**
    * 响应中间件事件
    */
   public hendler (): any {
     return (request: Request, response: Response, next: NextFunction): void => {
-      for (let [name, value] of this.__ResponseHeaders) {
+      for (let [name, value] of this.__ResponseHeaders || []) {
         response.setHeader(name, value)
       }
       if (this.__RequestParameters) {
@@ -46,7 +46,7 @@ export class Middleware {
           request[parameter] = this.__RequestParameters[parameter]
         }
       }
-      for (let [ name, func ] of this.__ResponseMethods) {
+      for (let [ name, func ] of this.__ResponseMethods || []) {
         response[name] = func(response)
       }
       return next()

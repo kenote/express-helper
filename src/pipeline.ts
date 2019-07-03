@@ -14,20 +14,21 @@ import { Controller, RouterMethod, PipelineOptions } from '../types'
 export function mountPipeline (name: string, pipeline: string, app: Application, options: PipelineOptions): void {
   let { root, handlers } = options || { root: '.', handlers: [] }
   let router: Router = Router()
+  let files: string[] = []
   glob.sync(`/${pipeline}/**/*.ts`, { root }).forEach(async file => {
+    files.push(file)
     let filename: string = path.basename(file).replace(/\.ts$/, '')
     if (/^(index)/.test(filename)) return
-    filename = path.basename(file).replace(/([a-zA-Z0-9\-\_]{1,})\.ts$/, `./${pipeline}/$1`)
     try {
       let controller = await import(file.replace(/\.[^.]*$/, ''))
       let Control: Controller = new controller.default()
-      addendRouter(Control.__DecoratedRouters, router, controller.default.__DecoratedRoot)
-      handlers = [ ...handlers || [], router ]
-      app.use(name, ...handlers)
+      Control.__DecoratedRouters && addendRouter(Control.__DecoratedRouters, router, controller.default.__DecoratedRoot)
     } catch (error) {
       console.error(error)
     }
   })
+  handlers = [ ...handlers || [], router ]
+  app.use(name, ...handlers)
 }
 
 /**

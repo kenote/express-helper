@@ -11,17 +11,17 @@ export class Controller {
   /**
    * 路由字典
    */
-  public __DecoratedRouters: Map<RouterMethod, RequestHandler[]>
+  public __DecoratedRouters?: Map<RouterMethod, RequestHandler[]>
 
   /**
    * 过滤器字典
    */
-  public __DecoratedFilters: Map<string, any>
+  public __DecoratedFilters?: Map<string, any>
 
   /**
    * 控制器根路径
    */
-  public __DecoratedRoot: string = ''
+  public __DecoratedRoot?: string
 
 }
 
@@ -42,10 +42,8 @@ export function Path (root: string): any {
 export function MountController (...controllers: Array<Controller | any>): Router {
   let router: Router = Router()
   for (let item of controllers) {
-    let __DecoratedRouters: Map<RouterMethod, RequestHandler[]> = (<Controller> new item()).__DecoratedRouters
+    let __DecoratedRouters: Map<RouterMethod, RequestHandler[]> = (<Controller> new item()).__DecoratedRouters || Map()
     addendRouter(__DecoratedRouters, router, item.__DecoratedRoot)
   }
   return router
 }
-
-

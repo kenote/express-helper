@@ -1,9 +1,17 @@
 # express-helper
+
 Express's Helper.
+
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Build Status][travis-image]][travis-url]
+[![Gratipay][licensed-image]][licensed-url]
 
 ## Installation
 
 ```bash
+$ npm install kenote-express-helper
+# Or
 $ yarn add kenote-express-helper
 ```
 
@@ -76,10 +84,10 @@ const app: Application = express()
 app.use(restful)
 
 // Auto Routing
-mountPipeline('/api', 'controller', app, { root: 'src' })
+mountPipeline('/api/v1', 'controller', app, { root: 'src' })
 
 // Manual Routing
-// app.use('/api', controller)
+app.use('/api/v2', controller)
 
 http.createServer(app).listen(3000)
 ```
@@ -87,3 +95,12 @@ http.createServer(app).listen(3000)
 ## License
 
 this repo is released under the [MIT License](https://github.com/kenote/express-helper/blob/master/LICENSE).
+
+[npm-image]: https://img.shields.io/npm/v/kenote-express-helper.svg
+[npm-url]: https://www.npmjs.com/package/kenote-express-helper
+[downloads-image]: https://img.shields.io/npm/dm/kenote-express-helper.svg
+[downloads-url]: https://www.npmjs.com/package/kenote-express-helper
+[travis-image]: https://travis-ci.com/kenote/express-helper.svg?branch=master
+[travis-url]: https://travis-ci.com/kenote/express-helper
+[licensed-image]: https://img.shields.io/badge/license-MIT-blue.svg
+[licensed-url]: https://github.com/kenote/express-helper/blob/master/LICENSE

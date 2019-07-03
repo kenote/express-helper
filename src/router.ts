@@ -20,7 +20,7 @@ export function Router (...config: RouterMethod[]): any {
       config.forEach( (item: RouterMethod): void => {
         item.name = propertyKey
         item.path = item.path
-        target.__DecoratedRouters = target.__DecoratedRouters.set(item, requestHandler)
+        target.__DecoratedRouters = target.__DecoratedRouters && target.__DecoratedRouters.set(item, requestHandler)
       })
     }
     else {
