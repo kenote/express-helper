@@ -21,7 +21,7 @@ export class Middleware {
   /**
    * 中间件方法
    */
-  public __ResponseMethods?: Map<string, (response: Response) => any>
+  public __ResponseMethods?: Map<string, (response: Response, request?: Request) => any>
 
   /**
    * 头部信息
@@ -47,7 +47,7 @@ export class Middleware {
         }
       }
       for (let [ name, func ] of this.__ResponseMethods || []) {
-        response[name] = func(response)
+        response[name] = func(response, request)
       }
       return next()
     }

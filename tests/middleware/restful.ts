@@ -1,4 +1,4 @@
-import { Response } from 'express'
+import { Response, Request } from 'express'
 import { Middleware, MiddlewareSetting, RegisterMiddlewareMethod } from '../../src'
 
 export interface IResponse extends Response {
@@ -17,7 +17,7 @@ export interface IResponse extends Response {
 class Restful extends Middleware {
 
   @RegisterMiddlewareMethod()
-  public api (response: Response): any {
+  public api (response: Response, request: Request): any {
     return (data: any): Response => {
       return response.json({ data })
     }
